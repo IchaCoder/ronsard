@@ -1,0 +1,161 @@
+http://localhost:3000/api/classes
+
+###
+http://localhost:3000/api/students
+
+###
+
+http://localhost:3000/api/students/classes/clye2sp9i0005wsthdaxhv0qz
+
+###
+http://localhost:3000/api/teachers
+
+###
+http://localhost:3001/api/classes/sections
+
+###
+http://localhost:3000/api/classes/clye2sp9i0005wsthdaxhv0qz
+
+###
+http://localhost:3000/api/classes/clye2sj6n0004wsth81iazuxf/sections
+
+###
+POST http://localhost:3000/api/calendar/year
+Content-Type: application/json
+
+{ "year" : "2024/2025", "startDate" : "2024-08-01", "endDate" : "2024-09-10" }
+
+###
+POST http://localhost:3000/api/calendar/term
+Content-Type: application/json
+
+{ "termName" : "Term 1", "startDate" : "2024-08-05", "endDate" :"2024-08-10", "academicYearId" :"clza160gh0003lub0k7ztlpz8" }
+
+###
+POST http://localhost:3000/api/calendar/term
+Content-Type: application/json
+
+{ "termName" : "Term 1", "startDate" : "2024-07-31", "endDate" :"2024-08-10", "academicYearId" :"clza160gh0003lub0k7ztlpz8" }
+
+###
+http://localhost:3000/api/calendar/year
+
+###
+http://localhost:3000/api/calendar/year/clza160gh0003lub0k7ztlpz8
+
+###
+http://localhost:3000/api/calendar/term/clza19oi80007lub0qe65wtaj
+
+###
+http://localhost:3001/api/fees/students?classSectionId=clz8klm4800014vj4melipooz&academicTermId=clza48wac000dlub0e5yb6v14
+
+###
+http://localhost:3001/api/fees/students/owing?classSectionId=clz8klm4800014vj4melipooz
+
+###
+http://localhost:3001/api/exams/settings
+
+###
+http://localhost:3001/api/teachers/clzk38ueq0001xtsz8zjpfotg
+
+###
+http://localhost:3001/api/teachers/clzk38ueq0001xtsz8zjpfotg/assigned/subject?teacherId=clzk38ueq0001xtsz8zjpfotg&classSectionId=clzk4ct0t0007xtsz8md99ift
+
+###
+http://localhost:3000/api/classes/sections
+
+###
+http://localhost:3001/api/subjects
+
+###
+POST http://localhost:3001/api/exams/assessments
+Content-Type: application/json
+
+{
+    "name" : "End-of-Term Exams", "description" :"This is the description!", "classSessionId" :"clzk4ap0u0005xtszt0csbpym", "subjectId" :"clzk5mdjo0009xtszx4sq4d1i", "weight" :10, "marks" :100
+}
+
+###
+http://localhost:3001/api/exams/assessments?subjectId=clzk5mdjo0009xtszx4sq4d1i&classSectionId=clzk4ap0u0005xtszt0csbpym
+
+###
+http://localhost:3000/api/classes/sections/clzk4ap0u0005xtszt0csbpym/students
+
+###
+http://localhost:3000/api/exams/assessments/grade/clzk4ap0u0005xtszt0csbpym/0558a5d7-f84d-4d5e-a52e-13792b662ff1
+
+###
+POST http://localhost:3000/api/exams/assessments/grade/clzk4ap0u0005xtszt0csbpym/0558a5d7-f84d-4d5e-a52e-13792b662ff1
+Content-Type: application/json
+
+{
+    "studentId" : "clzqrws5s000110uuk06fnznp",
+    "score" : 20
+}
+
+###
+
+http://localhost:3000/api/exams/assessments/grade/clzk4ap0u0005xtszt0csbpym/subject/clzk5mapf0008xtszq3313q7m
+
+###
+http://localhost:3000/api/summary/admin
+
+###
+http://localhost:3000/api/calendar/term/events
+
+###
+http://localhost:3000/api/attendance?date=2024-08-19&classSectionId=clzk4ap0u0005xtszt0csbpym
+
+###
+POST http://localhost:3000/api/attendance
+Content-Type: application/json
+
+{
+"studentIds" : ["clzqrws5s000110uuk06fnznp"], "classSectionId" : "clzk4ap0u0005xtszt0csbpym", "status": "present" 
+}
+
+###
+http://localhost:3000/api/parents/cm0cpo7u7000hxvdkxm3nx37p/summary
+
+###
+http://localhost:3000/api/attendance/clzqrws5s000110uuk06fnznp
+
+###
+http://localhost:3000/api/parents/cm0cpo7u7000hxvdkxm3nx37p/cm0cplwo6000gxvdk0wo5222o/assessment?academicTermId=cm0e3urow0001rktj5u1946qk
+
+###
+http://localhost:3000/api/parents/cm0cpo7u7000hxvdkxm3nx37p/cm0cplwo6000gxvdk0wo5222o/billing
+
+###
+http://localhost:3000/api/calendar/term/events/upcoming
+
+###
+http://localhost:3000/api/exams/assessments/classResults?termId=cm0e5lei40001qn45n7yp655k&sectionId=cm0cphq25000bxvdky6o6vbw8
+
+###
+POST http://localhost:3000/api/reset
+Content-Type: application/json
+
+{
+    "userIdentity" : "cm0cp8zad0000xvdkh3p8xuwl",
+    "password" : "newpass",
+    "role" : "admin"
+}
+
+###
+
+POST http://localhost:3000/api/mail/sendbill
+Content-Type: application/json
+
+{ 
+"studentIds" : ["cm0cplwo6000gxvdk0wo5222o"], 
+"academicTermId":"cm0e5lei40001qn45n7yp655k", 
+"academicYrId" : "cm0cqop4v000ixvdkmkf3klzp" 
+}
+
+###
+
+POST http://localhost:3000/api/mail/sendMessage
+Content-Type: application/json
+
+{ "message" : "Hello Sir", "parentEmail" : "mohammedanatu497@gmail.com", "parentName" : "Daniel Agyie" }

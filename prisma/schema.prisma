@@ -1,0 +1,365 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Classes model
+model Classes {
+  id        String   @id @default(cuid())
+  className String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Define relation to Students
+  students      Students[]      @relation(name: "ClassStudents")
+  Notification  Notification[]
+  ClassSections ClassSections[]
+  // Define relation to ClassSubjects
+  classSubjects ClassSubjects[]
+}
+
+// ClassSections model
+model ClassSections {
+  id          String   @id @default(cuid())
+  sectionName String
+  classId     String
+  teacherId   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Define relation to Classes
+  class Classes @relation(fields: [classId], references: [id])
+
+  // Define relation to Teachers
+  teacher Teachers? @relation(fields: [teacherId], references: [id])
+
+  // Define relation to Students
+  students         Students[]
+  AssignedTeachers AssignedTeachers[]
+  Assessments      Assessments[]
+  Attendance       Attendance[]
+}
+
+// Subjects model
+model Subjects {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Define relation to ClassSubjects
+  classSubjects    ClassSubjects[]
+  AssignedSubjects AssignedSubjects[]
+  Assessments      Assessments[]
+}
+
+// ClassSubjects model
+model ClassSubjects {
+  id        String   @id @default(cuid())
+  classId   String
+  subjectId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Define relation to Classes
+  class   Classes  @relation(fields: [classId], references: [id])
+  // Define relation to Subjects
+  subject Subjects @relation(fields: [subjectId], references: [id])
+}
+
+// Teachers model
+model Teachers {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String   @unique
+  phone     String
+  gender    String?
+  password  String
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Define relation to ClassSections
+  classSections    ClassSections[]
+  AssignedTeachers AssignedTeachers[]
+  Assessments      Assessments[]
+}
+
+// Students model
+model Students {
+  id              String   @id @default(cuid())
+  firstName       String
+  lastName        String
+  birthDate       DateTime
+  address         String?
+  passportImage   String?
+  parentId        String?
+  classId         String
+  classSectionsId String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Define relation to Classes
+  class   Classes  @relation(fields: [classId], references: [id], name: "ClassStudents")
+  // Define relation to Parents
+  parents Parents? @relation(fields: [parentId], name: "ParentStudents", references: [id])
+
+  // Define relation to Attendance
+  Notification      Notification[]
+  ClassSections     ClassSections?      @relation(fields: [classSectionsId], references: [id])
+  StudentFeeDetail  StudentFeeDetail[]
+  StudentFeeSummary StudentFeeSummary[]
+  Payment           Payment[]
+  Grades            Grades[]
+  Attendance        Attendance[]
+}
+
+// Parents model
+model Parents {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String   @unique
+  phone     String
+  address   String?
+  occupation   String?
+  password  String   @default("ronsard@123")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Define relation to Students
+  students Students[] @relation(name: "ParentStudents")
+}
+
+// Admins model
+model admins {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  phone     String
+  password  String   @default("ronsard@123")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notification {
+  id        String    @id @default(cuid())
+  title     String
+  content   String
+  dateTime  DateTime?
+  studentId String?
+  classId   String?
+  sendToAll Boolean   @default(false)
+  createdBy String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  // Relations
+  student Students? @relation(fields: [studentId], references: [id])
+  class   Classes?  @relation(fields: [classId], references: [id])
+}
+
+// AcademicYear model
+model AcademicYear {
+  id        String   @id @default(cuid())
+  year      String // E.g., "2024-2025"
+  startDate DateTime
+  endDate   DateTime
+  status    String // E.g., "Active", "Inactive"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Define relation to AcademicTerms
+  terms AcademicTerm[]
+}
+
+// AcademicTerm model
+model AcademicTerm {
+  id             String   @id @default(cuid())
+  termName       String // E.g., "Fall", "Spring"
+  startDate      DateTime
+  endDate        DateTime
+  status         String // E.g., "Active", "Inactive"
+  academicYearId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Define relation to AcademicYear
+  academicYear AcademicYear @relation(fields: [academicYearId], references: [id])
+
+  // Define relation to Events
+  events            Event[]
+  StudentFeeDetail  StudentFeeDetail[]
+  StudentFeeSummary StudentFeeSummary[]
+  Assessments       Assessments[]
+  Grades            Grades[]
+}
+
+// Event model
+model Event {
+  id             String   @id @default(cuid())
+  title          String
+  description    String
+  eventDate      DateTime
+  academicTermId String
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Define relation to AcademicTerm
+  academicTerm AcademicTerm @relation(fields: [academicTermId], references: [id])
+}
+
+model FeeDetail {
+  id          String   @id @default(cuid())
+  title       String // E.g., "Tuition", "Lab Fees"
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Define relation to StudentFeeDetail
+  studentFeeDetails StudentFeeDetail[]
+}
+
+model StudentFeeDetail {
+  id             String   @id @default(cuid())
+  studentId      String
+  feeDetailId    String
+  academicTermId String
+  amount         Float
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Define relation to Students
+  student Students @relation(fields: [studentId], references: [id])
+
+  // Define relation to FeeDetails
+  feeDetail FeeDetail @relation(fields: [feeDetailId], references: [id])
+
+  // Define relation to AcademicTerm
+  academicTerm AcademicTerm @relation(fields: [academicTermId], references: [id])
+}
+
+model StudentFeeSummary {
+  id              String   @id @default(cuid())
+  studentId       String
+  academicTermId  String
+  totalAmountOwed Float // Total amount billed for the term
+  totalAmountPaid Float // Total amount paid for the term
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  // Define relation to Students
+  student Students @relation(fields: [studentId], references: [id])
+
+  // Define relation to AcademicTerm
+  academicTerm AcademicTerm @relation(fields: [academicTermId], references: [id])
+}
+
+model Payment {
+  id            String   @id @default(uuid())
+  studentId     String
+  amount        Float
+  paymentMethod String
+  createdAt     DateTime @default(now())
+  student       Students @relation(fields: [studentId], references: [id])
+}
+
+model GradeSetting {
+  id        String   @id @default(uuid())
+  grade     String
+  minScore  Int
+  maxScore  Int
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model AssignedSubjects {
+  id                String   @id @default(uuid())
+  assignedTeacherId String
+  subjectId         String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  // Relations
+  assignedTeacher AssignedTeachers @relation(fields: [assignedTeacherId], references: [id])
+  subject         Subjects         @relation(fields: [subjectId], references: [id])
+}
+
+model AssignedTeachers {
+  id        String   @id @default(uuid())
+  teacherId String
+  classId   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  teacher Teachers      @relation(fields: [teacherId], references: [id])
+  class   ClassSections @relation(fields: [classId], references: [id])
+
+  // This will help to track which subjects a teacher is assigned to in a class
+  assignedSubjects AssignedSubjects[]
+}
+
+model Assessments {
+  id             String   @id @default(uuid())
+  name           String?
+  description    String?
+  academicTermId String
+  classSessionId String
+  subjectId      String
+  weight         Float?
+  marks          Float?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relations
+  academicTerm AcademicTerm  @relation(fields: [academicTermId], references: [id])
+  classSession ClassSections @relation(fields: [classSessionId], references: [id])
+  subject      Subjects      @relation(fields: [subjectId], references: [id])
+
+  // This will help to track grades related to the assessment
+  grades     Grades[]
+  Teachers   Teachers? @relation(fields: [teachersId], references: [id])
+  teachersId String?
+}
+
+model Grades {
+  id             String   @id @default(uuid())
+  studentId      String
+  assessmentId   String
+  academicTermId String
+  score          Float
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Define relations
+  assessment   Assessments  @relation(fields: [assessmentId], references: [id])
+  student      Students     @relation(fields: [studentId], references: [id])
+  academicTerm AcademicTerm @relation(fields: [academicTermId], references: [id])
+}
+
+// Attendance model
+model Attendance {
+  id             String    @id @default(cuid())
+  studentId      String // Reference to the student
+  classSectionId String? // Reference to the class section (optional)
+  status         String // Attendance status (Present, Absent, Late, Excused)
+  clockIn        DateTime? // Time the student clocked in
+  clockOut       DateTime? // Time the student clocked out
+  remarks        String? // Optional remarks for the attendance record
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  student      Students       @relation(fields: [studentId], references: [id])
+  classSection ClassSections? @relation(fields: [classSectionId], references: [id])
+}

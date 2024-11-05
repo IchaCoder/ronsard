@@ -1,0 +1,148 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+body {
+  /* color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb)); */
+    background-color: #f2f2f2;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+.calendar-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.full-width-calendar {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.react-calendar {
+  width: 100% !important;
+  max-width: 100%;
+}
+
+.react-calendar__tile {
+  padding: 10px !important;
+  border-radius: 5px;
+  position: relative;
+}
+
+.event-indicator {
+  background-color: #f9f9f9;
+  padding: 2px 5px;
+  border-radius: 4px;
+  position: absolute;
+  top: 3px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  font-size: 0.8rem;
+  color: #0070f3;
+  text-align: center;
+}
+
+.event-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.react-calendar__tile--active {
+  background-color: #006edc !important;
+  color: white !important;
+}
+
+.react-calendar__tile--now {
+  background-color: #038f21 !important;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-none {
+  display: block;
+}
+
+.print-display{
+  display: none;
+}
+
+.print-hide{
+  display: table-cell;
+}
+
+@media print {
+  /* Hide everything when printing */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Show only the invoice content */
+  .printable-area,
+  .printable-area * {
+    visibility: visible;
+  }
+
+  /* Ensure the invoice is positioned correctly for printing */
+  .printable-area {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* height: 100%; */
+  }
+
+  .print-display{
+    display: block;
+  }
+
+  .print-hide{
+    display: none;
+  }
+
+}
