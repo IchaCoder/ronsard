@@ -19,10 +19,10 @@ const Admission = () => {
         {/* <QRCode value="http://localhost:3000/admission" className="mt-8" /> */}
         <h1 className="flex gap-3 items-center mt-4">
           <Image className="w-12 h-12" src="/logo.png" alt="logo" width={150} height={150} />
-          <span className="text-4xl font-bold uppercase">Ecole Ronsard Bilingual School</span>
+          <span className="text-2xl md:text-4xl font-bold uppercase">Ecole Ronsard Bilingual School</span>
         </h1>
         <div className="my-4">
-          <h3 className="text-2xl font-semibold">REGULATIONS FOR THE PAYMENT OF SCHOOL FEES </h3>
+          <h3 className="text-lg md:text-2xl font-semibold">REGULATIONS FOR THE PAYMENT OF SCHOOL FEES </h3>
           <ul className="grid gap-2 mt-8">
             <li>
               Registration and admission fees must be paid before the children can start school. Admission fees are paid
@@ -65,7 +65,7 @@ const Admission = () => {
               )}
             />
           </div>
-          <div className="mt-4 flex justify-between">
+          <div className="mt-4 flex flex-col gap-4 sm:flex-row justify-between">
             <FormField
               control={form.control}
               rules={{ required: "This field is required" }}
@@ -86,7 +86,7 @@ const Admission = () => {
           </div>
         </div>
         <div className="my-8">
-          <h3 className="text-2xl font-semibold">CHECKLIST</h3>
+          <h3 className="text-lg md:text-2xl font-semibold">CHECKLIST</h3>
           <ul className="grid gap-2 mt-8">
             <li>3 passport pictures</li>
             <li>Photocopy of ID card</li>
@@ -104,10 +104,10 @@ const Admission = () => {
                 name="date_of_registration"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 flex-col">
                       <FormLabel>Date of Registration:</FormLabel>
                       <FormControl>
-                        <Input type="date" className="max-w-max !mt-0 !text-xs" {...field} />
+                        <Input type="date" className="sm:max-w-max w-full !mt-0 !text-xs" {...field} />
                       </FormControl>
                     </div>
                     <FormMessage />
@@ -126,10 +126,10 @@ const Admission = () => {
                 name="registration_no"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 flex-col">
                       <FormLabel>Registration No.:</FormLabel>
                       <FormControl>
-                        <Input type="text" className="max-w-max !mt-0 text-xs" {...field} />
+                        <Input type="text" className="sm:max-w-max w-full !mt-0 text-xs" {...field} />
                       </FormControl>
                     </div>
                     <FormMessage />
@@ -142,10 +142,10 @@ const Admission = () => {
                 name="date_of_admission"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 flex-col">
                       <FormLabel>Date of Admission:</FormLabel>
                       <FormControl>
-                        <Input type="date" className="max-w-max !mt-0 !text-xs" {...field} />
+                        <Input type="date" className="sm:max-w-max w-full !mt-0 !text-xs" {...field} />
                       </FormControl>
                     </div>
                     <FormMessage />
@@ -164,10 +164,10 @@ const Admission = () => {
                 name="fee_category"
                 render={({ field }) => (
                   <FormItem>
-                    <div className="flex gap-2 items-center">
+                    <div className="flex gap-2 flex-col">
                       <FormLabel>Fee Category:</FormLabel>
                       <FormControl>
-                        <Input type="text" className="max-w-max !mt-0 text-xs" {...field} />
+                        <Input type="text" className="sm:max-w-max w-full !mt-0 text-xs" {...field} />
                       </FormControl>
                     </div>
                     <FormMessage />
@@ -212,7 +212,7 @@ const Admission = () => {
           </div>
         </div>
         <div className="mt-8">
-          <h3 className="text-2xl font-semibold">REGISTRATION FORM (FILL IN BLOCK LETTERS)</h3>
+          <h3 className="text-lg md:text-2xl font-semibold">REGISTRATION FORM (FILL IN BLOCK LETTERS)</h3>
           <div className="mt-4">
             <h3 className="text-xl uppercase font-bold">PUPIL</h3>
             <div className="grid gap-4 md:grid-cols-2 mt-2">
